@@ -5,9 +5,9 @@
 * Python 3.6.3
 * Django 2.0.1
 
-## Secret Config JSON Files
+## Secret JSON Files
 
-> .config_secret/settings_common.json
+> secrets.json
 
 ```json
 {
