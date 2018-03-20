@@ -10,7 +10,6 @@ colorama==0.3.7
 decorator==4.1.2
 Django==2.0.1
 django-extensions==1.9.9
-django-storages==1.6.5
 docker==2.7.0
 docker-py==1.7.2
 docker-pycreds==0.2.1

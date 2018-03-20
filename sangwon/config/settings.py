@@ -11,18 +11,35 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 import json
 import os
+import sys
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ROOT_DIR = os.path.dirname(BASE_DIR)
 
-# Config paths
-CONFIG_SECRET_DIR = os.path.join(ROOT_DIR, '.config_secret')
-CONFIG_SECRET_COMMON_FILE = os.path.join(CONFIG_SECRET_DIR, 'settings_common.json')
-config_secret_common = json.loads(open(CONFIG_SECRET_COMMON_FILE).read())
+# Secrets paths
+SECRETS_PATH = os.path.join(ROOT_DIR, 'secrets.json')
+secrets = json.loads(open(SECRETS_PATH).read())
+
+# Secret key, values
+for key, value in secrets.items():
+    setattr(sys.modules[__name__], key, value)
 
 # Static paths
 STATIC_URL = '/static/'
+STATIC_DIR = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.join(ROOT_DIR, '.static_root')
+
+STATICFILES_DIRS = [
+    STATIC_DIR,
+]
+
+# Template DIR
+TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
+
+# Media
+MEDIA_ROOT = os.path.join(ROOT_DIR, '.media')
+MEDIA_URL = '/media/'
 
 # Application definition
 INSTALLED_APPS = [
@@ -35,6 +52,8 @@ INSTALLED_APPS = [
 
     'django_extensions',
     'storages',
+
+    'products',
 ]
 
 MIDDLEWARE = [
@@ -52,7 +71,9 @@ ROOT_URLCONF = 'config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            TEMPLATE_DIR,
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -74,10 +95,9 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-
 # Auth
-SUPERUSER_USERNAME = config_secret_common['django']['superuser']['username']
-SUPERUSER_PASSWORD = config_secret_common['django']['superuser']['password']
+SUPERUSER_USERNAME = secrets['django']['superuser']['username']
+SUPERUSER_PASSWORD = secrets['django']['superuser']['password']
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -102,4 +122,4 @@ USE_L10N = True
 USE_TZ = True
 
 DEBUG = True
-SECRET_KEY = config_secret_common['django']['secret_key']
+SECRET_KEY = secrets['django']['secret_key']
