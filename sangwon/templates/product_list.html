@@ -1,46 +1,8 @@
-{% load static %}
-<!doctype html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>상원금속</title>
-    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.css' %}">
-</head>
-<body>
-<div>
-    <nav class="navbar navbar-default">
-        <div class="col-lg-6 col-lg-offset-3
-				col-md-8 col-md-offset-2
-				col-sm-10 col-sm-offset-1
-				col-xs-12">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#top-nav">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="{% url 'product-list' %}">상원금속</a>
-            </div>
-            <div class="collapse navbar-collapse" id="top-nav">
-                <ul class="nav navbar-nav navbar-right">
-                </ul>
-            </div>
-        </div>
-    </nav>
-    <div class="col-lg-6 col-lg-offset-3
-				col-md-8 col-md-offset-2
-				col-sm-10 col-sm-offset-1
-				col-xs-12">
-
-        <h1>{% block title %}{% endblock %}</h1>
-
-        {% block content %}
-        {% endblock %}
-    </div>
-</div>
-</body>
-</html>
+{% extends 'base.html' %}
+{% block content %}
+    {% for product in products %}
+        <span>{{ product.name }}</span>
+        <span>{{ product.size }}</span>
+        <span>{{ product.description }}</span>
+    {% endfor %}
+{% endblock %}
