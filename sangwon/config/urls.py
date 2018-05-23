@@ -18,11 +18,15 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path
 
-from products import views
+from config.views import index
+from products.views import *
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('products/', views.product_list, name='product-list'),
+
+    path('', index, name='index'),
+    path('products/', product_list, name='product-list'),
 ]
 
 urlpatterns += static(
